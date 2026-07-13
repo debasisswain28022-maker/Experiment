@@ -1,0 +1,75 @@
+<style>
+@keyframes fly1 { 0% { transform: translate(-40px, 0); } 50% { transform: translate(300px, -18px); } 100% { transform: translate(650px, 4px); } }
+@keyframes fly2 { 0% { transform: translate(-30px, 10px); } 50% { transform: translate(280px, -6px); } 100% { transform: translate(600px, 18px); } }
+@keyframes fly3 { 0% { transform: translate(-20px, 20px); } 50% { transform: translate(250px, 4px); } 100% { transform: translate(560px, -8px); } }
+@keyframes drift { 0%,100% { background-position-x: 0; } 50% { background-position-x: 24px; } }
+@keyframes cloud1 { 0%,100% { transform: translateX(0); } 50% { transform: translateX(18px); } }
+@keyframes cloud2 { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-14px); } }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(4px) rotate(1deg); } }
+.bird { position:absolute; width:16px; height:8px; }
+.bird::before, .bird::after { content:''; position:absolute; width:9px; height:2px; background:#5c3a21; top:3px; border-radius:2px; }
+.bird::before { left:0; transform: rotate(28deg); transform-origin:right center; }
+.bird::after { right:0; transform: rotate(-28deg); transform-origin:left center; }
+.tree { position:absolute; bottom:0; width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:20px solid #3a2440; }
+.tree::before { content:''; position:absolute; left:-5px; top:-32px; width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-bottom:16px solid #3a2440; }
+.tree::after { content:''; position:absolute; left:-2px; bottom:-8px; width:4px; height:8px; background:#2a1a30; }
+.cloud { position:absolute; background:rgba(255,240,210,0.85); border-radius:40px; }
+.cloud::before, .cloud::after { content:''; position:absolute; background:inherit; border-radius:50%; }
+</style>
+
+<div style="position:relative;width:100%;height:480px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#3a2258 0%,#8a4a6f 26%,#e07a56 50%,#f7ad5c 72%,#ffe0a0 100%)">
+
+<div style="position:absolute;left:420px;top:60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,244,210,0.98) 0%,rgba(255,196,120,0.55) 55%,rgba(255,196,120,0) 100%)"></div>
+<div style="position:absolute;left:466px;top:106px;width:70px;height:70px;border-radius:50%;background:#fff7e0"></div>
+
+<div class="cloud" style="left:60px;top:50px;width:90px;height:26px;animation:cloud1 12s ease-in-out infinite;">
+<div style="position:absolute;left:14px;top:-12px;width:44px;height:34px;border-radius:50%;background:inherit"></div>
+<div style="position:absolute;left:50px;top:-6px;width:32px;height:26px;border-radius:50%;background:inherit"></div>
+</div>
+<div class="cloud" style="left:250px;top:36px;width:70px;height:20px;opacity:0.8;animation:cloud2 16s ease-in-out infinite;">
+<div style="position:absolute;left:10px;top:-10px;width:34px;height:26px;border-radius:50%;background:inherit"></div>
+<div style="position:absolute;left:38px;top:-5px;width:24px;height:20px;border-radius:50%;background:inherit"></div>
+</div>
+<div class="cloud" style="left:560px;top:66px;width:60px;height:18px;opacity:0.7;animation:cloud1 20s ease-in-out infinite 3s;">
+<div style="position:absolute;left:8px;top:-8px;width:28px;height:22px;border-radius:50%;background:inherit"></div>
+</div>
+
+<div class="bird" style="top:58px;animation:fly1 14s linear infinite;"></div>
+<div class="bird" style="top:88px;animation:fly2 18s linear infinite 2s;"></div>
+<div class="bird" style="top:108px;animation:fly3 16s linear infinite 5s;"></div>
+
+<div style="position:absolute;left:0;top:88px;width:100%;height:180px;background:linear-gradient(135deg,#7a5480 0%,#9a6f8f 100%);clip-path:polygon(0% 55%,10% 40%,20% 50%,28% 20%,38% 48%,48% 32%,58% 52%,68% 25%,79% 50%,90% 30%,100% 52%,100% 100%,0% 100%);opacity:0.85"></div>
+<div style="position:absolute;left:0;top:128px;width:100%;height:172px;background:linear-gradient(135deg,#5a4370 0%,#6d4f75 100%);clip-path:polygon(0% 62%,13% 35%,22% 55%,34% 20%,44% 58%,56% 35%,66% 60%,76% 28%,88% 62%,100% 40%,100% 100%,0% 100%)"></div>
+<div style="position:absolute;left:0;top:168px;width:100%;height:132px;background:linear-gradient(135deg,#3a2450 0%,#4a2f55 100%);clip-path:polygon(0% 70%,10% 45%,20% 65%,32% 25%,42% 68%,54% 42%,64% 70%,74% 33%,86% 68%,100% 48%,100% 100%,0% 100%)"></div>
+
+<div style="position:absolute;left:32%;top:196px;width:14px;height:18px;background:#ffe9c2;opacity:0.85;clip-path:polygon(50% 0%,0% 100%,100% 100%)"></div>
+<div style="position:absolute;left:54%;top:203px;width:12px;height:15px;background:#ffe9c2;opacity:0.7;clip-path:polygon(50% 0%,0% 100%,100% 100%)"></div>
+<div style="position:absolute;left:74%;top:198px;width:11px;height:14px;background:#ffe9c2;opacity:0.65;clip-path:polygon(50% 0%,0% 100%,100% 100%)"></div>
+
+<div style="position:absolute;left:0;bottom:200px;width:100%;height:0;">
+<div class="tree" style="left:6%;"></div>
+<div class="tree" style="left:12%;"></div>
+<div class="tree" style="left:9%;bottom:-4px;transform:scale(0.85);"></div>
+<div class="tree" style="left:80%;"></div>
+<div class="tree" style="left:86%;"></div>
+<div class="tree" style="left:83%;bottom:-4px;transform:scale(0.8);"></div>
+<div class="tree" style="left:46%;transform:scale(0.7);opacity:0.9;"></div>
+</div>
+
+<div style="position:absolute;left:0;top:300px;width:100%;height:180px;background:linear-gradient(180deg,rgba(247,173,92,0.6) 0%,rgba(180,110,110,0.55) 35%,rgba(58,34,88,0.78) 100%);overflow:hidden">
+<div style="position:absolute;left:0;top:-142px;width:100%;height:172px;background:linear-gradient(135deg,#7a5480 0%,#9a6f8f 100%);clip-path:polygon(0% 55%,10% 40%,20% 50%,28% 20%,38% 48%,48% 32%,58% 52%,68% 25%,79% 50%,90% 30%,100% 52%,100% 100%,0% 100%);opacity:0.4;transform:scaleY(-1)"></div>
+<div style="position:absolute;left:0;top:-100px;width:100%;height:132px;background:linear-gradient(135deg,#5a4370 0%,#6d4f75 100%);clip-path:polygon(0% 62%,13% 35%,22% 55%,34% 20%,44% 58%,56% 35%,66% 60%,76% 28%,88% 62%,100% 40%,100% 100%,0% 100%);opacity:0.45;transform:scaleY(-1)"></div>
+<div style="position:absolute;left:0;top:-60px;width:100%;height:92px;background:linear-gradient(135deg,#3a2450 0%,#4a2f55 100%);clip-path:polygon(0% 70%,10% 45%,20% 65%,32% 25%,42% 68%,54% 42%,64% 70%,74% 33%,86% 68%,100% 48%,100% 100%,0% 100%);opacity:0.5;transform:scaleY(-1)"></div>
+<div style="position:absolute;left:46px;top:6px;width:120px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,247,224,0.55) 0%,rgba(255,247,224,0) 100%)"></div>
+<div style="position:absolute;left:0;top:0;width:100%;height:100%;background:repeating-linear-gradient(180deg,rgba(255,240,210,0.2) 0px,rgba(255,240,210,0.2) 2px,transparent 2px,transparent 26px);animation:drift 6s ease-in-out infinite"></div>
+
+<div style="position:absolute;left:220px;top:56px;animation:bob 4s ease-in-out infinite;">
+<div style="width:64px;height:16px;background:#2a1a30;border-radius:0 0 20px 20px;clip-path:polygon(6% 0%,94% 0%,100% 100%,0% 100%)"></div>
+<div style="position:absolute;left:30px;bottom:12px;width:2px;height:26px;background:#2a1a30"></div>
+<div style="position:absolute;left:31px;bottom:24px;width:16px;height:12px;background:#ffe9c2;opacity:0.9;clip-path:polygon(0% 0%,100% 50%,0% 100%)"></div>
+</div>
+</div>
+
+<div style="position:absolute;left:0;top:0;width:100%;height:100%;background:radial-gradient(circle at 68% 20%,rgba(255,214,140,0.18) 0%,rgba(255,214,140,0) 55%);pointer-events:none"></div>
+
+</div>

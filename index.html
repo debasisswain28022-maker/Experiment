@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+
+            /* 🔥 Animated Gradient Background */
+            background: linear-gradient(270deg, #ff6ec4, #7873f5, #42e695, #f9ca24);
+            background-size: 800% 800%;
+            animation: gradientMove 10s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        .btn-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .btn-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🌟 My Web Dashboard</h1>
+
+    <div class="btn-container">
+        <button onclick="goTo('moon_sun_flower_garden.html')">Page 1</button>
+        <button onclick="goTo('living-city.html')">Page 2</button>
+        <button onclick="goTo('firefly_catcher_game.html')">Page 3</button>
+        <button onclick="goTo('echo_sequence_game.html')">Page 4</button>
+        <button onclick="goTo('color_match_game.html')">Page 5</button>
+        <button onclick="goTo('mountain_river_scene_golden_hour.html')">Page 6</button>
+        <!-- <button onclick="goTo('page7.html')">Page 7</button> -->
+    </div>
+
+    <script>
+        function goTo(page) {
+            window.location.href = page;
+        }
+    </script>
+
+</body>
+</html>
