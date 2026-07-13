@@ -1,0 +1,81 @@
+<div style="padding:1rem 0">
+<h2 class="sr-only">Firefly catcher: click glowing fireflies before they fade. Miss three and the game ends.</h2>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px">
+<span>Score: <b id="score">0</b></span>
+<span style="color:var(--text-secondary)">Click or hover to catch fireflies before they fade</span>
+<span>Misses: <b id="misses">0</b>/3</span>
+</div>
+<div id="field" style="position:relative;width:100%;height:420px;background:#141b32;border-radius:12px;overflow:hidden;cursor:default">
+<div id="over" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(10,14,28,0.85);color:#fff;font-size:16px">
+<span id="overtext">Game over</span>
+<button id="restart" style="font-size:13px;padding:6px 14px">Play again</button>
+</div>
+</div>
+</div>
+<script>
+const field = document.getElementById('field');
+const scoreEl = document.getElementById('score');
+const missesEl = document.getElementById('misses');
+const over = document.getElementById('over');
+const overtext = document.getElementById('overtext');
+const restart = document.getElementById('restart');
+let score = 0, misses = 0, spawnTimer = null, running = true;
+
+function spawnFirefly() {
+  if (!running) return;
+  const fw = field.clientWidth, fh = field.clientHeight;
+  const size = 16 + Math.random() * 12;
+  const x = Math.random() * (fw - size - 24) + 12;
+  const y = Math.random() * (fh - size - 24) + 12;
+  const life = Math.max(1100, 1800 - score * 15);
+  const fly = document.createElement('div');
+  fly.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${size}px;height:${size}px;border-radius:50%;background:#f5e97a;box-shadow:0 0 12px 4px rgba(245,233,122,0.7);cursor:pointer;transition:opacity ${life}ms linear,transform 150ms ease;opacity:1`;
+  let caught = false;
+  const catchFly = () => {
+    if (caught || !running) return;
+    caught = true;
+    score++;
+    scoreEl.textContent = score;
+    fly.style.transform = 'scale(2)';
+    fly.style.opacity = '0';
+    setTimeout(() => fly.remove(), 180);
+  };
+  fly.addEventListener('click', catchFly);
+  fly.addEventListener('mouseenter', () => {
+    if (!caught) fly.style.transform = 'scale(1.35)';
+  });
+  fly.addEventListener('mouseleave', () => {
+    if (!caught) fly.style.transform = 'scale(1)';
+  });
+  field.appendChild(fly);
+  requestAnimationFrame(() => { fly.style.opacity = '0'; });
+  setTimeout(() => {
+    if (!caught && fly.parentNode) {
+      fly.remove();
+      misses++;
+      missesEl.textContent = misses;
+      if (misses >= 3) endGame();
+    }
+  }, life);
+}
+
+function endGame() {
+  running = false;
+  clearInterval(spawnTimer);
+  document.querySelectorAll('#field > div:not(#over)').forEach(f => f.remove());
+  overtext.textContent = 'Game over — score ' + score;
+  over.style.display = 'flex';
+}
+
+function startGame() {
+  score = 0; misses = 0; running = true;
+  scoreEl.textContent = 0; missesEl.textContent = 0;
+  over.style.display = 'none';
+  document.querySelectorAll('#field > div:not(#over)').forEach(f => f.remove());
+  clearInterval(spawnTimer);
+  spawnTimer = setInterval(spawnFirefly, 650);
+}
+
+restart.addEventListener('click', startGame);
+startGame();
+</script>

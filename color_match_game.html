@@ -1,0 +1,87 @@
+<div style="padding:1rem 0;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:380px;margin:0 auto">
+<h2 class="sr-only">Color match: mix red, green, and blue sliders to match a target color swatch. Five rounds, scored by how close your mix is.</h2>
+<div style="display:flex;justify-content:space-between;width:100%;font-size:14px">
+<span>Round: <b id="round">1</b>/5</span>
+<span>Score: <b id="totalscore">0</b></span>
+</div>
+<div style="display:flex;gap:16px;align-items:center">
+<div>
+<p style="font-size:12px;color:var(--text-secondary);margin:0 0 4px;text-align:center">Target</p>
+<div id="target" style="width:110px;height:110px;border-radius:12px;border:0.5px solid var(--border)"></div>
+</div>
+<div>
+<p style="font-size:12px;color:var(--text-secondary);margin:0 0 4px;text-align:center">Your mix</p>
+<div id="mix" style="width:110px;height:110px;border-radius:12px;border:0.5px solid var(--border)"></div>
+</div>
+</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:14px;font-size:12px;color:#c9433f">R</span>
+<input type="range" min="0" max="255" value="128" id="r" style="flex:1">
+<span id="rval" style="width:28px;font-size:12px;text-align:right">128</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:14px;font-size:12px;color:#3b9a4a">G</span>
+<input type="range" min="0" max="255" value="128" id="g" style="flex:1">
+<span id="gval" style="width:28px;font-size:12px;text-align:right">128</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:14px;font-size:12px;color:#3a7fc9">B</span>
+<input type="range" min="0" max="255" value="128" id="b" style="flex:1">
+<span id="bval" style="width:28px;font-size:12px;text-align:right">128</span>
+</div>
+</div>
+<button id="submit" style="font-size:13px;padding:6px 16px;width:100%">Submit match</button>
+<p id="feedback" style="font-size:13px;color:var(--text-secondary);margin:0;min-height:18px"></p>
+</div>
+<script>
+const rEl = document.getElementById('r'), gEl = document.getElementById('g'), bEl = document.getElementById('b');
+const rval = document.getElementById('rval'), gval = document.getElementById('gval'), bval = document.getElementById('bval');
+const mixBox = document.getElementById('mix'), targetBox = document.getElementById('target');
+const roundEl = document.getElementById('round'), totalEl = document.getElementById('totalscore');
+const submitBtn = document.getElementById('submit'), feedback = document.getElementById('feedback');
+let round = 1, total = 0, target = [0,0,0], locked = false;
+
+function updateMix() {
+  rval.textContent = rEl.value; gval.textContent = gEl.value; bval.textContent = bEl.value;
+  mixBox.style.background = `rgb(${rEl.value},${gEl.value},${bEl.value})`;
+}
+[rEl,gEl,bEl].forEach(el => el.addEventListener('input', updateMix));
+
+function newTarget() {
+  target = [Math.floor(Math.random()*256),Math.floor(Math.random()*256),Math.floor(Math.random()*256)];
+  targetBox.style.background = `rgb(${target[0]},${target[1]},${target[2]})`;
+  rEl.value = 128; gEl.value = 128; bEl.value = 128;
+  updateMix();
+  locked = false;
+  submitBtn.textContent = 'Submit match';
+  submitBtn.disabled = false;
+  feedback.textContent = '';
+}
+
+function submit() {
+  if (locked) {
+    if (round >= 5) {
+      round = 1; total = 0;
+      roundEl.textContent = round; totalEl.textContent = total;
+      newTarget();
+      return;
+    }
+    round++;
+    roundEl.textContent = round;
+    newTarget();
+    return;
+  }
+  const dist = Math.sqrt((rEl.value-target[0])**2 + (gEl.value-target[1])**2 + (bEl.value-target[2])**2);
+  const maxDist = Math.sqrt(3*255*255);
+  const points = Math.round(100 * (1 - dist/maxDist));
+  total += points;
+  totalEl.textContent = total;
+  feedback.textContent = 'Distance ' + Math.round(dist) + ' — ' + points + ' points this round';
+  locked = true;
+  submitBtn.textContent = round >= 5 ? 'Play again' : 'Next round';
+}
+
+submitBtn.addEventListener('click', submit);
+newTarget();
+</script>
