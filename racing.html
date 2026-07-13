@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Racing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏎️ Mini Racing Game 🏎️</h1>
+        
+        <div class="game-info">
+            <div class="info-item">
+                <span class="label">Speed:</span>
+                <span class="value" id="speed">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Score:</span>
+                <span class="value" id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Lives:</span>
+                <span class="value" id="lives">3</span>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+        <div class="controls">
+            <p><strong>Controls:</strong></p>
+            <p>← → Arrow Keys to Move | Space to Start/Pause</p>
+            <button id="startBtn" class="btn">Start Game</button>
+            <button id="resetBtn" class="btn">Reset Game</button>
+        </div>
+
+        <div id="gameOver" class="modal hidden">
+            <div class="modal-content">
+                <h2>Game Over!</h2>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <button id="restartBtn" class="btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
